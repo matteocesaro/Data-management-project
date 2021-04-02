@@ -1,0 +1,49 @@
+from nltk.tokenize import word_tokenize
+from prettytable import PrettyTable
+from collections import Counter
+import tweepy
+from tweepy import OAuthHandler
+
+
+# Set consumer key, consumer secret, access token and access token secret
+# Read them from your Twitter dev page
+consumer_key = "..."
+consumer_secret = "..."
+access_token = "..."
+access_token_secret = "..."
+
+# Authenticate with the OAuth protocol
+# See: https://en.wikipedia.org/wiki/OAuth
+auth = OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+
+# Get the API object passing the authentication object
+# See http://docs.tweepy.org/en/latest/api.html to discover the available methods
+api = tweepy.API(auth)
+ 
+#for status in tweepy.Cursor(api.user_timeline, id="Sanremo").items():
+    #print(status)
+
+#raccolgo i tweet con hashtag Sanremo 2021 tra le date scelte
+tweets = tweepy.Cursor(api.search_full_archive, environment_name = "Sanremo", query = "sanremo2021", fromDate = "202103062204", toDate = "202103062205", maxResults = "100").items(1000)
+
+status_texts, screen_names, hashtags= [],[],[]
+
+for tweet in tweets:
+    status_texts.append(tweet.text)
+    screen_names += [userMention['screen_name'] for userMention in tweet.entities['user_mentions']]
+    hashtags += [hashtag['text'] for hashtag in tweet.entities['hashtags']]
+
+
+words = [word for text in status_texts for word in word_tokenize(text)]
+
+for label, data in [('Word', words),
+    ('Screen Names', screen_names),
+    ('Hashtag', hashtags)
+    ]:
+    prettyTable = PrettyTable(field_names=['label', 'Count'])
+    counter = Counter(data)
+    [prettyTable.add_row(kv) for kv in counter.most_common()[:10]]
+    prettyTable.align[label] = 'l'
+    prettyTable.align['Count'] = 'r'
+    print(prettyTable)
