@@ -1,17 +1,14 @@
 import json
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import tweepy
 from tweepy import OAuthHandler
 
 
 # Set consumer key, consumer secret, access token and access token secret
 # Read them from your Twitter dev page
-consumer_key = "nBUwRkSWoDOyrHyTbnyNhzjyx"
-consumer_secret = "ORMePAdflpN4eNpHukOaehIqKVCPGHqqRt0zTzhw3nN9Xu08kD"
-access_token = "1318929800854122496-sZBWNuAFKB3DWgIqoHVloKh7qL8keT"
-access_token_secret = "d26NGEyRdEaLJguiCaqk2iYZGoAuAkc3TFSpOuWsmTqSE"
+consumer_key = "..."
+consumer_secret = "..."
+access_token = "..."
+access_token_secret = "..."
 
 # Authenticate with the OAuth protocol
 # See: https://en.wikipedia.org/wiki/OAuth
@@ -21,17 +18,8 @@ auth.set_access_token(access_token, access_token_secret)
 # Get the API object passing the authentication object
 # See http://docs.tweepy.org/en/latest/api.html to discover the available methods
 api = tweepy.API(auth)
-#SEARCH METHOD
 
-# "Try" to search 30 tweets with the query 'unimib'
-# The API.search helper method has some limitations...
-# See: http://docs.tweepy.org/en/latest/api.html#API.search
-#search_results = api.search(q="sanremo2021", count=10)
-
-
-#search_results = api.search_full_archive(environment_name = "Sanremo", query = "sanremo2021", fromDate = "202103022000", toDate = "202103022100", maxResults = "100")
- 
 #for status in tweepy.Cursor(api.user_timeline, id="Sanremo").items():
     #print(status)
     
-tweets = tweepy.Cursor(api.search_full_archive, environment_name = "Sanremo", query = "sanremo2021", fromDate = "202103062204", toDate = "202103062205", maxResults = "100").items(100)
+tweets = tweepy.Cursor(api.search_full_archive, environment_name = "...", query = "sanremo2021", fromDate = "202103062204", toDate = "202103062205", maxResults = "100").items(100)
