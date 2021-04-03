@@ -1,0 +1,16 @@
+ssh -p 57592 "nome porta ssh..." -L 8888:localhost:8888 -L 27017:localhost:27017 -L 8081:localhost:8081
+
+
+cd data-management-lab
+
+
+./datalab-cli.sh -a start -s mongo -s jupyter-lab
+
+
+#(chrome locale) http://localhost:8081
+
+
+./datalab-cli.sh -a logs -s jupyter-lab
+#(cerca l'ultimo link)
+
+#(chrome locale) "ultimo link trovato"
